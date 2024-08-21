@@ -14,6 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NsisoLauncherX\NsisoLauncherX.UI.csproj" />
+    <ProjectReference Include="..\NsisoLauncherX.UI\NsisoLauncherX.UI.csproj" />
   </ItemGroup>
 </Project>

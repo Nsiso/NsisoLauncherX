@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NsisoLauncherX.UI", "NsisoLauncherX\NsisoLauncherX.UI.csproj", "{EEEFEADE-E343-4C5D-9A51-55BC66F4849E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NsisoLauncherX.UI.Desktop", "NsisoLauncherX.Desktop\NsisoLauncherX.UI.Desktop.csproj", "{DDEA1A57-BEB7-4780-9C20-745B1B48F2B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEEFEADE-E343-4C5D-9A51-55BC66F4849E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEEFEADE-E343-4C5D-9A51-55BC66F4849E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEEFEADE-E343-4C5D-9A51-55BC66F4849E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEEFEADE-E343-4C5D-9A51-55BC66F4849E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDEA1A57-BEB7-4780-9C20-745B1B48F2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDEA1A57-BEB7-4780-9C20-745B1B48F2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDEA1A57-BEB7-4780-9C20-745B1B48F2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDEA1A57-BEB7-4780-9C20-745B1B48F2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B42F1CA1-1798-40A3-B3E6-1C0E300E812F}
+	EndGlobalSection
+EndGlobal

@@ -1,35 +1,48 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace NsisoLauncherX.Core.Net.Meta;
 
-public class MetaService
+public class MetaService : IWebApi
 {
     public string BaseUrl { get; set; } = "https://launchermeta.mojang.com";
 
-    public async Task<RequestResult<VersionManifestV2>> GetVersionManifestV2(NetRequester requester, CancellationToken cancellation = default)
+    [Obsolete("The newest launcher should use GetVersionManifestV2 instead, GetVersionManifestV1 is for compatibility use.")]
+    public async Task<RequestResult<VersionManifest<VersionMeta>>> GetVersionManifestV1(NetRequester requester, CancellationToken cancellation = default)
     {
-        string url = BaseUrl + "/mc/game/version_manifest_v2.json";
+        var uri = $"{BaseUrl}/mc/game/version_manifest.json";
         try
         {
-            HttpResponseMessage jsonRespond = await requester.Client.GetAsync(url, cancellation);
+            var jsonRespond = await requester.Client.GetAsync(uri, cancellation);
             if (!jsonRespond.IsSuccessStatusCode)
             {
-                return new RequestResult<VersionManifestV2>(RequestStatus.Error, jsonRespond.StatusCode,
-                    jsonRespond.ReasonPhrase, null);
+                return RequestResult<VersionManifest<VersionMeta>>.Error(jsonRespond);
             }
-
-            string jsonStr = await jsonRespond.Content.ReadAsStringAsync(cancellation);
-            VersionManifestV2? manifest = JsonSerializer.Deserialize<VersionManifestV2>(jsonStr);
-            return manifest == null ? new RequestResult<VersionManifestV2>(new NullReferenceException("Json serializer deserialize the json into an empty object. (VersionManifestV2)")) : new RequestResult<VersionManifestV2>(RequestStatus.Success, jsonRespond.StatusCode, null, manifest);
-        }
-        catch (TaskCanceledException e)
-        {
-            return new RequestResult<VersionManifestV2>(e);
+            var manifest = await jsonRespond.Content.ReadFromJsonAsync<VersionManifest<VersionMeta>>(cancellation);
+            return RequestResult<VersionManifest<VersionMeta>>.Success(jsonRespond, manifest);
         }
         catch (Exception e)
         {
-            return new RequestResult<VersionManifestV2>(e);
+            return RequestResult<VersionManifest<VersionMeta>>.Exception(e, uri, cancellation.IsCancellationRequested);
         }
-        
+    }
+    
+    public async Task<RequestResult<VersionManifest<VersionMetaV2>>> GetVersionManifestV2(NetRequester requester, CancellationToken cancellation = default)
+    {
+        var uri = $"{BaseUrl}/mc/game/version_manifest_v2.json";
+        try
+        {
+            var jsonRespond = await requester.Client.GetAsync(uri, cancellation);
+            if (!jsonRespond.IsSuccessStatusCode)
+            {
+                return RequestResult<VersionManifest<VersionMetaV2>>.Error(jsonRespond);
+            }
+            var manifest = await jsonRespond.Content.ReadFromJsonAsync<VersionManifest<VersionMetaV2>>(cancellation);
+            return RequestResult<VersionManifest<VersionMetaV2>>.Success(jsonRespond, manifest);
+        }
+        catch (Exception e)
+        {
+            return RequestResult<VersionManifest<VersionMetaV2>>.Exception(e, uri, cancellation.IsCancellationRequested);
+        }
     }
 }

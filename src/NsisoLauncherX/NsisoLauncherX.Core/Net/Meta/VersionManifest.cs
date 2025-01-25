@@ -5,24 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace NsisoLauncherX.Core.Net.Meta;
 
-[DebuggerDisplay("VersionManifestV2 count={Versions?.Count}")]
-public class VersionManifestV2
-{
-    [JsonPropertyName("latest")]
-    public VersionLatest? Latest { get; set; }
-
-    [JsonPropertyName("versions")]
-    public List<VersionMetaV2>? Versions { get; set; }
-}
-
 [DebuggerDisplay("VersionManifest count={Versions?.Count}")]
-public class VersionManifest
+public class VersionManifest<TContent> where TContent : VersionMeta
 {
     [JsonPropertyName("latest")]
     public VersionLatest? Latest { get; set; }
 
     [JsonPropertyName("versions")]
-    public List<VersionMeta>? Versions { get; set; }
+    public List<TContent>? Versions { get; set; }
 }
 
 [DebuggerDisplay("{Id}")]

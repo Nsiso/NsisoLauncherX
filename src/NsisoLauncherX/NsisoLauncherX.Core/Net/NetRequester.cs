@@ -20,6 +20,11 @@ namespace NsisoLauncherX.Core.Net
         private string ClientName { get; set; } = "NsisoLauncherX";
 
         /// <summary>
+        /// Set the DefaultRequestHeaders AcceptLanguag in the requester.
+        /// </summary>
+        private string AcceptLanguageName { get; set; } = CultureInfo.CurrentCulture.Name;
+
+        /// <summary>
         /// NsisoLauncher目前版本号.
         /// </summary>
         private string? ClientVersion { get; set; } = Assembly.GetExecutingAssembly().GetName().Version?.ToString(2);
@@ -47,78 +52,10 @@ namespace NsisoLauncherX.Core.Net
         {
             this.ClientHandler = new HttpClientHandler();
             this.Client = new HttpClient(this.ClientHandler) {/* Timeout = NetRequester.Timeout */};
+            
+            // set the default headers
             this.Client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(ClientName, ClientVersion));
-            this.Client.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(CultureInfo.CurrentCulture.Name));
-        }
-
-        public  async Task<string> HttpGetStringAsync(string uri)
-        {
-            return await Client.GetStringAsync(uri);
-        }
-
-        public  async Task<HttpResponseMessage> HttpGetAsync(Uri uri, HttpCompletionOption option, CancellationToken cancellation)
-        {
-            return await Client.GetAsync(uri, option, cancellation);
-        }
-
-        public  async Task<HttpResponseMessage> HttpGetAsync(Uri uri)
-        {
-            return await Client.GetAsync(uri);
-        }
-
-        public  async Task<HttpResponseMessage> HttpGetAsync(Uri uri, CancellationToken cancellation)
-        {
-            return await Client.GetAsync(uri, cancellation);
-        }
-
-        public  async Task<HttpResponseMessage> HttpGetAsync(string uri)
-        {
-            return await Client.GetAsync(uri);
-        }
-
-        public  async Task<HttpResponseMessage> HttpGetAsync(string uri, CancellationToken cancellation)
-        {
-            return await Client.GetAsync(uri, cancellation);
-        }
-
-        public  async Task<HttpResponseMessage> HttpPostAsync(Uri uri, HttpContent arg)
-        {
-            return await Client.PostAsync(uri, arg);
-        }
-
-        public  async Task<HttpResponseMessage> HttpPostAsync(Uri uri, Dictionary<string, string> arg)
-        {
-            return await Client.PostAsync(uri, new FormUrlEncodedContent(arg));
-        }
-
-        public  async Task<HttpResponseMessage> HttpPostAsync(string uri, Dictionary<string, string> arg)
-        {
-            return await Client.PostAsync(uri, new FormUrlEncodedContent(arg));
-        }
-
-        public  async Task<HttpResponseMessage> HttpPostAsync(Uri uri, HttpContent arg, CancellationToken cancellation)
-        {
-            return await Client.PostAsync(uri, arg, cancellation);
-        }
-
-        public  async Task<HttpResponseMessage> HttpPostAsync(Uri uri, Dictionary<string, string> arg, CancellationToken cancellation)
-        {
-            return await Client.PostAsync(uri, new FormUrlEncodedContent(arg), cancellation);
-        }
-
-        public  async Task<HttpResponseMessage> HttpPostAsync(string uri, Dictionary<string, string> arg, CancellationToken cancellation)
-        {
-            return await Client.PostAsync(uri, new FormUrlEncodedContent(arg), cancellation);
-        }
-
-        public  async Task<HttpResponseMessage> HttpSendAsync(HttpRequestMessage httpRequest)
-        {
-            return await Client.SendAsync(httpRequest);
-        }
-
-        public  async Task<HttpResponseMessage> HttpSendAsync(HttpRequestMessage httpRequest, CancellationToken cancellation)
-        {
-            return await Client.SendAsync(httpRequest, cancellation);
+            this.Client.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(this.AcceptLanguageName));
         }
     }
 }
